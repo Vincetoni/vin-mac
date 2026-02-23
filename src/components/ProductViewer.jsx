@@ -1,4 +1,6 @@
 import clsx from "clsx";
+import { Canvas } from "@react-three/fiber";
+import { Box, OrbitControls } from "@react-three/drei";
 import useMacBookStore from "../store";
 
 const ProductViewer = () => {
@@ -9,10 +11,10 @@ const ProductViewer = () => {
             <h2>Take a closer look</h2>
 
             <div className="controls">
-                 <p className="info">Macbookpro 16" in {color} / space black</p>
+                 <p className="info">Macbookpro {scale}" in {color} / space black</p>
             
 
-            <div className="flex-center gap-5 mt-5">
+             <div className="flex-center gap-5 mt-5">
                 <div className="color-control">
                     <div 
                     onClick={() => setColor('#adb5bd')} 
@@ -20,18 +22,35 @@ const ProductViewer = () => {
                     />
 
                     <div 
-                    onClick={() => setColor('black')} 
-                    className={clsx('bg-neutral-900', color === 'black' && 'active')}
+                    onClick={() => setColor('#0fe70f')} 
+                    className={clsx('bg-neutral-900', color === '#0fe70f' && 'active')}
                     />
                 </div>
 
                 <div className="size-control">
-                   <div><p>14"</p></div>
-                   <div><p>16"</p></div>
+                   <div 
+                    onClick={() => setScale(0.06)} 
+                    className={clsx(scale === 0.06 ? 'bg-white text-black' : 'bg-transparent text-white')}
+                    >14</div>
+
+                    <div 
+                    onClick={() => setScale(0.08)} 
+                    className={clsx(scale === 0.08 ? 'bg-white text-black' : 'bg-transparent text-white')}
+                    >16</div>
+
                 </div>
 
+             </div>
             </div>
-            </div>
+         <Canvas id="canvas" camera={{ position:[0,2,5], fov:50, near:0.1, far:100}}>
+            <ambientLight intensity={0.5} />
+            <directionalLight position={[2, 2, 2]} />
+
+            <Box position={[0, 0, 0]} scale={10 * scale}>
+                <meshStandardMaterial color={color} />
+            </Box>
+            <OrbitControls enableZoom={false} />
+        </Canvas>
         </section>
     )
 }
