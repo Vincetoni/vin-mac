@@ -1,13 +1,20 @@
-import { Enviroment } from "@react-three/drei";
+import { Environment, Lightformer } from "@react-three/drei";
 
-const studioLight = () => {
+const StudioLight = () => {
   return (
     <group name="light">
-        <Enviroment resolution={256}>
-            
-        </Enviroment>
+        <ambientLight intensity={0.6} />
+        <Environment resolution={256}>
+            <group>
+                <Lightformer 
+                    form="rect"
+                    intensity={20}
+                    position={[-10,5,-5]}
+                />
+            </group>
+        </Environment>
     </group>
   )
 }
 
-export default studioLight
+export default StudioLight
